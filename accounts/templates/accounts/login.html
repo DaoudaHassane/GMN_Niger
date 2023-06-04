@@ -1,0 +1,13 @@
+<h1>Connexion!</h1>
+<form method="POST" action>
+    {% csrf_token %}
+    <p>
+        <label for="username">Votre nom svplait?</label>
+        <input id="username" type="text" name="username">
+    </p>
+    <p>
+        <label for="password">Mot de passe?</label>
+        <input id="password" type="password" name="password">  
+    </p>
+    <button type="submit"> Je me connecte! </button>
+</form>

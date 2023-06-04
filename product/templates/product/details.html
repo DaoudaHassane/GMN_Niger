@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Grands Marchés du Niger</title>
+        <!-- MDB icon -->
+        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <!-- Font Awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <!-- Google Fonts Roboto -->
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        />
+        <!-- MDB -->
+        <link rel="stylesheet" href="css/mdb.min.css" />
+    </head>
+    <body>
+        <!-- Start your project here-->
+        {% include 'product/navbar.html' %} 
+
+        {% if not user.is_authenticated %}  
+            <h5 class="text-center"><a href="{% url 'signup' %}"> <strong>Je m'inscrit!</strong> </a></h5>
+            <h5 class="text-center"><a href="{% url 'login' %}"> <strong>Je me connecte!</strong> </a></h5>
+        {% else %}
+            <h5 class="text-center"> Merci pour votre inscription: {{user.username}}</h5>
+            <h5 class="text-center"><a href="{% url 'logout' %}"> <strong>Deconnexion!</strong> </a></h5>
+  
+        {% endif %}
+
+        {% if user.cart %}
+        <p>
+            <a href="{% url 'cart' %}"> Voir le panier ({{ user.cart.items.count }})</a>
+        </p>
+        {% endif %}
+  
+        <h1 class="text-center">{{ item.title }}</h1>
+        <div class="container">
+            <a href="" class="btn btn-lg btn-block btn-success mt-2 p-4">Lieu de RDV</a>
+            
+            <div class="row mx-auto"> 
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="card">
+                        <img src="{{ item.img.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                        <img src="{{ item.img1.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                        <img src="{{ item.img2.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                        <img src="{{ item.img3.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                        <img src="{{ item.img4.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                        <img src="{{ item.img5.url }}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <a href="" class="btn btn-lg btn-block btn-success"></a>
+            
+            <div class="row mx-auto"> 
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="card">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <h8 class="card-title"><strong>{{ item.article_statu }}</strong></h8> <br>
+                        <h8 class="card-title">{{ item.description }}</h8>
+                        <h5 class="card-title">contacter le numero: {{ item.Phone_number }}</h5>
+                        <h5 class="card-title">{{ item.price }} FCA</h5>
+                        <h5 class="card-title">{{ item.discount_price }} FCA</h5>
+                    </div>
+                    <div>
+                        {% if user.is_authenticated %}
+                        <h5 class="card-title"><a href="{% url 'add-to-cart' item.slug %}">Ajouter dans le panier</a></h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End your project here-->
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Custom scripts -->
+        <script type="text/javascript"></script>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Recherche {{query}}</title>
+        <!-- MDB icon -->
+        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <!-- Font Awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <!-- Google Fonts Roboto -->
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        />
+        <!-- MDB -->
+        <link rel="stylesheet" href="css/mdb.min.css" />
+    </head>
+    <body>
+        <!-- Start your project here-->
+        <nav class="navbar navbar-light bg-primary">
+            <div class="container">
+              <a class="navbar-brand" href="{% url 'index' %}">
+                <img src={% static 'logo/niger_map.jpg' %} alt="carte du niger" width="30" height="24">
+              </a>
+            </div>
+        </nav>
+        
+
+        <form action="{% url 'search' %}" class="d-flex container" method='GET'>
+            <input name="search" class="form-control me-2" type="search" placeholder="Ecrivez ICI le produit ou l'article que vous chercher dans grand marché!" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Recherche</button>
+        </form>
+
+        <div class="container">
+            {% if query %}
+            <p>La recherche pour: <strong>{{query}}</strong> </p>
+            {% endif %}
+
+        {% if result%}
+            {% for x in result %}
+            {% if forloop.first %}
+            <div class="row mx-auto">
+            {% endif %}
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <img src="{{ x.img.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <img src="{{ x.img1.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <img src="{{ x.img2.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <img src="{{ x.img3.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <img src="{{ x.img4.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <img src="{{ x.img5.url}}" class="img-fluid" alt="{{ x.title }}" style="max-width: 200px;"/>
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ x.title }}</h5>
+                            <h8 class="card-title"><strong>{{ x.article_statu }}</strong></h8> <br>
+                            <h8 class="card-title">{{ x.description }}</h8>
+                            <h5 class="card-title"><strong>Contacter le numero:</strong> {{ x.Phone_number }}</h5>
+                            <h5 class="card-title">{{ x.price }} FCA</h5>
+                            <h5 class="card-title">{{ x.discount_price }} FCA</h5>
+                            <h5 class="card-title">{{ x.created_at }}</h5>
+                            <a href="{{ x.get_absolute_url }}" class="btn btn-primary">Voir les photos</a>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:4 %}
+            </div> 
+            <div class="row mx-auto mt-2">{% endif %}{% if forloop.last %} </div> {% endif %}
+            {% endfor %}
+            </div>
+    
+        {% endif %}
+
+            {% if not result %}
+            <p class="lead">Nous n'avons pas trouvé: {{query}}</p>
+            {% endif %}
+        </div>
+        <!-- End your project here-->
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Custom scripts -->
+        <script type="text/javascript"></script>
+    </body>
+</html>
